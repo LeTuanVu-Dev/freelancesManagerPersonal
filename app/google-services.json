@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "472775436232",
+    "project_id": "freelancesmanager-1e83a",
+    "storage_bucket": "freelancesmanager-1e83a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:472775436232:android:08d0b65803e94530fc82fd",
+        "android_client_info": {
+          "package_name": "com.freelances.projectmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9McqsF0jumu87GZsb_Wyb1_HpDhVaKss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
