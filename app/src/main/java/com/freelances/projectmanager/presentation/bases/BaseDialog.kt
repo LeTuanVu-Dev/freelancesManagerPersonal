@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.viewbinding.ViewBinding
-import com.freelances.projectmanager.R
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.R
 
 
 abstract class BaseDialog<VB : ViewBinding>(context: Context, private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB ) :

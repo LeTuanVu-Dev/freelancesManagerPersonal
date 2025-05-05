@@ -1,4 +1,4 @@
-package com.freelances.projectmanager.utils.ext
+package com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.ext
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import kotlin.math.abs

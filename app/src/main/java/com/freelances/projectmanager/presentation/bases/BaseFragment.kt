@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.freelances.projectmanager.utils.ext.hideKeyboard
 import com.freelances.projectmanager.utils.ext.isRTL
-import com.freelances.projectmanager.utils.preference.AppSharedPreference
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.preference.AppSharedPreference
 import org.koin.core.component.KoinScopeComponent
 import org.koin.core.component.createScope
 import org.koin.core.component.inject

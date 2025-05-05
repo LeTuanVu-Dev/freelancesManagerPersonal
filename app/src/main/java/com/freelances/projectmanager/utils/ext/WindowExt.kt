@@ -1,4 +1,4 @@
-package com.freelances.projectmanager.utils.ext
+package com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.ext
 
 import android.os.Build
 import android.view.Window

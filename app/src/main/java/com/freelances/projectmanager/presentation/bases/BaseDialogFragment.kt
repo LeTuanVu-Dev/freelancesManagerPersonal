@@ -1,4 +1,4 @@
-package com.freelances.projectmanager.presentation.bases
+package com.freelances.`21A100100413_NgoAnhTuan_05052025`.presentation.bases
 
 import android.app.Dialog
 import android.content.Context
@@ -21,7 +21,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.viewbinding.ViewBinding
 import com.freelances.projectmanager.R
-import com.freelances.projectmanager.utils.ext.hideSystemBar
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.ext.hideSystemBar
 
 abstract class BaseDialogFragment<V : ViewBinding> : DialogFragment() {
     private var _binding: V? = null

@@ -1,10 +1,10 @@
-package com.freelances.projectmanager.presentation.preview
+package com.freelances.`21A100100413_NgoAnhTuan_05052025`.presentation.preview
 
 import androidx.lifecycle.lifecycleScope
 import com.freelances.projectmanager.databinding.ActivityPreviewBinding
 import com.freelances.projectmanager.model.Personal
-import com.freelances.projectmanager.presentation.bases.BaseActivity
-import com.freelances.projectmanager.utils.constant.KEY_DATA
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.presentation.bases.BaseActivity
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.constant.KEY_DATA
 import com.freelances.projectmanager.utils.ext.safeClick
 import com.freelances.projectmanager.utils.ext.showToast
 import com.freelances.projectmanager.utils.helper.PersonalHelper

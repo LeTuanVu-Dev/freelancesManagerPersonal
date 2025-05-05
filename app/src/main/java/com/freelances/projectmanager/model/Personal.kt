@@ -1,4 +1,4 @@
-package com.freelances.projectmanager.model
+package com.freelances.`21A100100413_NgoAnhTuan_05052025`.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

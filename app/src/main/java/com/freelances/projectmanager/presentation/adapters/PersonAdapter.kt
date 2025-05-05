@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.freelances.projectmanager.databinding.ItemUserBinding
 import com.freelances.projectmanager.model.Personal
-import com.freelances.projectmanager.utils.ext.safeClick
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.ext.safeClick
 
 
 class PersonAdapter(

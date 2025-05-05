@@ -1,4 +1,4 @@
-package com.freelances.projectmanager.presentation.home
+package com.freelances.`21A100100413_NgoAnhTuan_05052025`.presentation.home
 
 import android.app.Activity
 import android.content.res.Resources
@@ -20,13 +20,13 @@ import com.freelances.projectmanager.databinding.LayoutMoreBinding
 import com.freelances.projectmanager.model.Personal
 import com.freelances.projectmanager.presentation.adapters.PersonAdapter
 import com.freelances.projectmanager.presentation.bases.BaseActivity
-import com.freelances.projectmanager.presentation.dialog.AddUserDialog
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.presentation.dialog.AddUserDialog
 import com.freelances.projectmanager.presentation.preview.PreviewPersonal
 import com.freelances.projectmanager.utils.constant.KEY_DATA
-import com.freelances.projectmanager.utils.ext.gone
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.ext.gone
 import com.freelances.projectmanager.utils.ext.safeClick
 import com.freelances.projectmanager.utils.ext.showToast
-import com.freelances.projectmanager.utils.helper.PersonalHelper
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.helper.PersonalHelper
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 

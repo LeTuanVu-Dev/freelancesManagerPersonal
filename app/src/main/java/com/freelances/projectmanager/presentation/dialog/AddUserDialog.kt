@@ -1,14 +1,14 @@
-package com.freelances.projectmanager.presentation.dialog
+package com.freelances.`21A100100413_NgoAnhTuan_05052025`.presentation.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.freelances.projectmanager.R
-import com.freelances.projectmanager.databinding.DialogAddItemBinding
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.databinding.DialogAddItemBinding
 import com.freelances.projectmanager.model.Personal
-import com.freelances.projectmanager.presentation.bases.BaseDialogFragment
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.presentation.bases.BaseDialogFragment
 import com.freelances.projectmanager.utils.ext.generateUniqueId
-import com.freelances.projectmanager.utils.ext.safeClick
+import com.freelances.`21A100100413_NgoAnhTuan_05052025`.utils.ext.safeClick
 import com.freelances.projectmanager.utils.ext.showToast
 
 class AddUserDialog : BaseDialogFragment<DialogAddItemBinding>() {
