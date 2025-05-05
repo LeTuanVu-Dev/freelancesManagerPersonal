@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.activity.result.ActivityResult
 import androidx.core.os.bundleOf
+import androidx.lifecycle.lifecycleScope
 import com.freelances.projectmanager.databinding.ActivityMainBinding
 import com.freelances.projectmanager.databinding.LayoutMoreBinding
 import com.freelances.projectmanager.model.Personal
@@ -26,6 +27,7 @@ import com.freelances.projectmanager.utils.ext.gone
 import com.freelances.projectmanager.utils.ext.safeClick
 import com.freelances.projectmanager.utils.ext.showToast
 import com.freelances.projectmanager.utils.helper.PersonalHelper
+import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -60,6 +62,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     override fun initViews() {
+        lifecycleScope.launch {
+//            addRandom()
+        }
         getAll()
         initAction()
     }
@@ -68,25 +73,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.recyclerView.apply {
             adapter = personalAdapter
         }
-
         personalAdapter.submitList(data)
     }
 
     private fun getAll() {
-        personalHelper.getAllPersonals { data ->
+        lifecycleScope.launch {
+            val data = personalHelper.getAllPersonals()
+            Log.d(TAG, "getAll: $data")
             listData.clear()
             listData.addAll(data.reversed())
-            runOnUiThread {
-                setUpData(listData)
-                binding.frLoading.gone()
-            }
+            setUpData(listData)
+            binding.frLoading.gone()
         }
     }
+
+
     private fun showAddDialog() {
         val dialogInputNewDataListener = AddUserDialog.newInstance { item ->
-           personalHelper.addPersonal(item){
-               getAll()
-           }
+            lifecycleScope.launch {
+                if (personalHelper.addPersonal(item)){
+                    getAll()
+                }
+            }
         }
         dialogInputNewDataListener.show(
             supportFragmentManager,
@@ -135,14 +143,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         personalAdapter.submitList(filteredList.toMutableList())
     }
 
-    private fun addRandom() {
-        personalHelper.addRandomUsers { success ->
-            if (success) {
-                Log.d("Firebase_check", "Thêm 10 user ngẫu nhiên thành công")
-            } else {
-                Log.e("Firebase_check", "Lỗi khi thêm user")
-            }
-        }
+    private suspend fun addRandom() {
+       val success =  personalHelper.addRandomUsers(10)
     }
 
     private fun showPopupMore(view: View, item: Personal) {
@@ -177,20 +179,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         }
 
         binding1.lnRemove.safeClick {
-           personalHelper.deletePersonal(item.idPersonal){
-               if (it){
-                   val newList = listData.toMutableList().apply {
-                       removeIf { it.idPersonal == item.idPersonal } // dùng điều kiện rõ ràng
-                   }
-                   listData = newList as ArrayList<Personal> // Cập nhật lại list gốc nếu bạn giữ bên ngoài adapter
+            lifecycleScope.launch {
+                val delete = personalHelper.deletePersonal(item.maNv)
+                if (delete){
+                    val newList = listData.toMutableList().apply {
+                        removeIf { it.maNv == item.maNv } // dùng điều kiện rõ ràng
+                    }
+                    listData = newList as ArrayList<Personal> // Cập nhật lại list gốc nếu bạn giữ bên ngoài adapter
 
-                   runOnUiThread {
-                   personalAdapter.submitList(newList)
-                       showToast("delete done!")
-                       binding.frLoading.gone()
-                   }
-               }
-           }
+                    runOnUiThread {
+                        personalAdapter.submitList(newList)
+                        showToast("delete done!")
+                        binding.frLoading.gone()
+                    }
+                }
+            }
             popupMenu.dismiss()
         }
         popupMenu.showAsDropDown(view, -200, 30, Gravity.NO_GRAVITY)

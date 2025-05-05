@@ -2,114 +2,102 @@ package com.freelances.projectmanager.utils.helper
 
 import com.freelances.projectmanager.model.Personal
 import com.freelances.projectmanager.utils.constant.Personals
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class PersonalHelper {
 
     private val database = FirebaseDatabase.getInstance().getReference(Personals)
 
-    fun addPersonal(personal: Personal, onComplete: (Boolean) -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val key = database.push().key
-            if (key == null) {
-                onComplete(false)
-                return@launch
-            }
-            val newPersonal = personal.copy(idPersonal = key)
-            database.child(key).setValue(newPersonal)
-                .addOnCompleteListener { task ->
-                    onComplete(task.isSuccessful)
-                }
+    suspend fun addPersonal(personal: Personal): Boolean = withContext(Dispatchers.IO) {
+        val key = database.push().key ?: return@withContext false
+        val newPersonal = personal.copy(maNv = key)
+        try {
+            database.child(key).setValue(newPersonal).await()
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 
-    fun addPersonalList(personalList: List<Personal>, onComplete: (Boolean) -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            var successCount = 0
-
+    suspend fun addPersonalList(personalList: List<Personal>): Boolean = withContext(Dispatchers.IO) {
+        try {
             personalList.forEach { personal ->
-                val key = database.push().key ?: return@forEach
-                val newPersonal = personal.copy(idPersonal = key)
-
-                database.child(key).setValue(newPersonal)
-                    .addOnSuccessListener {
-                        successCount++
-                        if (successCount == personalList.size) {
-                            onComplete(true)
-                        }
-                    }
-                    .addOnFailureListener {
-                        onComplete(false)
-                    }
+                val key = database.push().key ?: return@withContext false
+                val newPersonal = personal.copy(maNv = key)
+                database.child(key).setValue(newPersonal).await()
             }
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 
-    fun updatePersonal(personal: Personal, onComplete: (Boolean) -> Unit) {
-        if (personal.idPersonal.isEmpty()) return onComplete(false)
-        CoroutineScope(Dispatchers.IO).launch {
-            database.child(personal.idPersonal).setValue(personal)
-                .addOnCompleteListener { task ->
-                    onComplete(task.isSuccessful)
-                }
+    suspend fun updatePersonal(personal: Personal): Boolean = withContext(Dispatchers.IO) {
+        if (personal.maNv.isEmpty()) return@withContext false
+        try {
+            database.child(personal.maNv).setValue(personal).await()
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 
-    fun deletePersonal(idPersonal: String, onComplete: (Boolean) -> Unit) {
-        if (idPersonal.isEmpty()) return onComplete(false)
-        CoroutineScope(Dispatchers.IO).launch {
-            database.child(idPersonal).removeValue()
-                .addOnCompleteListener { task ->
-                    onComplete(task.isSuccessful)
-                }
+    suspend fun deletePersonal(idPersonal: String): Boolean = withContext(Dispatchers.IO) {
+        if (idPersonal.isEmpty()) return@withContext false
+        try {
+            database.child(idPersonal).removeValue().await()
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 
-    fun getAllPersonals(onDataReceived: (List<Personal>) -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            database.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val list = snapshot.children.mapNotNull { it.getValue(Personal::class.java) }
-                    onDataReceived(list)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    onDataReceived(emptyList())
-                }
-            })
+    suspend fun getAllPersonals(): List<Personal> = withContext(Dispatchers.IO) {
+        try {
+            val snapshot = database.get().await()
+            snapshot.children.mapNotNull { it.getValue(Personal::class.java) }
+        } catch (e: Exception) {
+            emptyList()
         }
     }
 
-    fun addRandomUsers(count: Int = 10, onComplete: (Boolean) -> Unit) {
+    suspend fun addRandomUsers(count: Int = 10): Boolean = withContext(Dispatchers.IO) {
         val names = listOf("An", "Bình", "Chi", "Dũng", "Hà", "Khanh", "Linh", "Minh", "Ngọc", "Phúc")
         val sexes = listOf("Nam", "Nữ")
-        var successCount = 0
+        val positions = listOf("Nhân viên", "Quản lý", "Trưởng phòng", "Kế toán", "Thư ký")
 
-        repeat(count) {
-            val name = names.random()
-            val sex = sexes.random()
-            val date = "${(1..28).random().toString().padStart(2, '0')}/0${(1..9).random()}/200${(0..9).random()}"
-            val key = database.push().key ?: return@repeat
-            val user = Personal(idPersonal = key, name = name, date = date, sex = sex)
+        try {
+            repeat(count) {
+                val name = names.random()
+                val sex = sexes.random()
+                val chucVu = positions.random()
+                val hsl = (1.5 + Math.random() * 3.5).toString().take(4)
+                val lcb = ((2_000_000..10_000_000).random()).toString()
+                val date = "${(1..28).random().toString().padStart(2, '0')}/0${(1..9).random()}/200${(0..9).random()}"
+                val key = database.push().key ?: return@withContext false
 
-            database.child(key).setValue(user)
-                .addOnSuccessListener {
-                    successCount++
-                    if (successCount == count) {
-                        onComplete(true)
-                    }
-                }
-                .addOnFailureListener {
-                    onComplete(false)
-                }
+                val user = Personal(
+                    maNv = key,
+                    name = name,
+                    date = date,
+                    sex = sex,
+                    chucVu = chucVu,
+                    hsl = hsl,
+                    lcb = lcb
+                )
+                database.child(key).setValue(user).await()
+            }
+            true
+        } catch (e: Exception) {
+            false
         }
+    }
+
+    companion object {
+        val instance by lazy { PersonalHelper() }
     }
 
 }

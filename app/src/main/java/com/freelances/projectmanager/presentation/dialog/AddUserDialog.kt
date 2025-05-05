@@ -45,7 +45,7 @@ class AddUserDialog : BaseDialogFragment<DialogAddItemBinding>() {
             val date = binding.etDate.text.toString().trim()
             val sex = binding.etSex.text.toString().trim()
             val idUser = generateUniqueId()
-            val user = Personal(idPersonal = idUser, name = name, date = date, sex = sex)
+            val user = Personal(maNv = idUser, name = name, date = date, sex = sex)
             submitAction?.invoke(user)
             dismiss()
         }

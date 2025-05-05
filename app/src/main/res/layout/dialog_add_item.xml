@@ -61,6 +61,38 @@
             android:hint="Giới tính(Nam/Nữ)"
             android:inputType="text" />
 
+        <!-- Title and EditText for Gender -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hsl:"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/etHsl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="1.5"
+            android:inputType="text" />
+
+        <!-- Title and EditText for Gender -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lcb:"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/etLcb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="5000000đ"
+            android:inputType="text" />
+
         <!-- Add Button -->
         <TextView
             android:id="@+id/btnAdd"

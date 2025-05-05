@@ -1,5 +1,6 @@
 package com.freelances.projectmanager.presentation.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ class PersonAdapter(
                 oldItem: Personal,
                 newItem: Personal
             ): Boolean {
-                return oldItem.idPersonal == newItem.idPersonal
+                return oldItem.maNv == newItem.maNv
             }
 
             override fun areContentsTheSame(
@@ -54,9 +55,14 @@ class PersonAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Personal) {
+            Log.d("FirebaseCheck", "bind: $item")
             binding.tvName.text = item.name
             binding.tvSex.text = item.sex
             binding.tvDate.text = item.date
+            binding.tvChucVu.text = item.chucVu
+            binding.tvHsl.text = item.hsl
+            binding.tvLcb.text = item.lcb
+            binding.tvMaNv.text = item.maNv
 
             binding.ivMore.setOnClickListener { view ->
                 onClickMore(view,item)
