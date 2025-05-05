@@ -72,19 +72,28 @@
                 android:id="@+id/edtInputSearch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:imeOptions="actionDone"
+                android:layout_marginEnd="@dimen/_6sdp"
                 android:background="#F4F4F4"
-                android:inputType="text"
                 android:fontFamily="@font/roboto_400"
                 android:hint="@string/search_your_name"
-                android:layout_marginEnd="@dimen/_6sdp"
+                android:imeOptions="actionDone"
                 android:includeFontPadding="false"
+                android:inputType="text"
                 android:textColor="@color/black"
                 android:textColorHint="@color/color_A9AEB8"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/_26sdp"
+        android:layout_height="@dimen/_26sdp"
+        android:src="@drawable/ic_sort"
+        app:layout_constraintTop_toBottomOf="@id/lnSearch"
+        app:layout_constraintEnd_toEndOf="@id/lnSearch"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/ivSort"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -97,7 +106,7 @@
         android:clipToPadding="false"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/lnSearch"
+        app:layout_constraintTop_toBottomOf="@id/ivSort"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_user" />
 

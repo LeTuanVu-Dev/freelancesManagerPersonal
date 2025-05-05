@@ -69,6 +69,7 @@
             android:hint="Nhập tên"
             android:inputType="textPersonName" />
 
+
         <!-- Title and EditText for Date -->
         <TextView
             android:layout_width="match_parent"
@@ -82,6 +83,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ngày sinh (dd/MM/yyyy)"
+            android:inputType="text" />
+
+        <!-- Title and EditText for Date -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ChucVu"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/etChucVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ke toan"
             android:inputType="text" />
 
         <!-- Title and EditText for Gender -->
@@ -99,6 +116,37 @@
             android:hint="Giới tính"
             android:inputType="text" />
 
+        <!-- Title and EditText for Gender -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hsl:"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/etHsl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="1.5"
+            android:inputType="text" />
+
+        <!-- Title and EditText for Gender -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lcb:"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/etLcb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="5000000đ"
+            android:inputType="text" />
         <!-- Update Button -->
         <TextView
             android:id="@+id/btnUpdate"

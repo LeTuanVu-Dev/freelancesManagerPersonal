@@ -17,6 +17,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.freelances.projectmanager.databinding.ActivityMainBinding
 import com.freelances.projectmanager.databinding.LayoutMoreBinding
+import com.freelances.projectmanager.databinding.LayoutSortBinding
 import com.freelances.projectmanager.model.Personal
 import com.freelances.projectmanager.presentation.adapters.PersonAdapter
 import com.freelances.projectmanager.presentation.bases.BaseActivity
@@ -26,6 +27,7 @@ import com.freelances.projectmanager.utils.constant.KEY_DATA
 import com.freelances.projectmanager.utils.ext.gone
 import com.freelances.projectmanager.utils.ext.safeClick
 import com.freelances.projectmanager.utils.ext.showToast
+import com.freelances.projectmanager.utils.ext.tap
 import com.freelances.projectmanager.utils.helper.PersonalHelper
 import kotlinx.coroutines.launch
 import org.koin.core.component.inject
@@ -34,8 +36,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     private val personalHelper: PersonalHelper by inject()
 
     private val personalAdapter: PersonAdapter by lazy {
-        PersonAdapter(::handleClickItem) { view, item ->
+        PersonAdapter(::handleClickItem, ::onChangeList) { view, item ->
             showPopupMore(view, item)
+        }
+    }
+
+    private fun onChangeList(){
+        try {
+            binding.recyclerView.scrollToPosition(0)
+
+        }catch (e:Exception){
+
         }
     }
     private var filteredList = arrayListOf<Personal>()
@@ -107,6 +118,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
             frAdd.safeClick {
                 showAddDialog()
+            }
+
+            ivSort.setOnClickListener { view->
+                showPopupSort(view)
             }
 
             edtInputSearch.addTextChangedListener(object : TextWatcher {
@@ -194,6 +209,49 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     }
                 }
             }
+            popupMenu.dismiss()
+        }
+        popupMenu.showAsDropDown(view, -200, 30, Gravity.NO_GRAVITY)
+    }
+
+    private fun showPopupSort(view: View) {
+        val layoutInflater = LayoutInflater.from(this)
+        val binding1 = LayoutSortBinding.inflate(layoutInflater)
+        val popupMenu = PopupWindow(this)
+        popupMenu.contentView = binding1.root
+        popupMenu.width = LinearLayout.LayoutParams.WRAP_CONTENT
+        popupMenu.height = LinearLayout.LayoutParams.WRAP_CONTENT
+        popupMenu.isFocusable = true
+        popupMenu.isOutsideTouchable = true
+        popupMenu.elevation = 100f
+
+        popupMenu.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Đo kích thước của PopupWindow để tính toán chiều cao cần thiết
+        binding1.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        val popupHeight = binding1.root.measuredHeight
+
+        // Lấy vị trí của view gốc trên màn hình
+        val location = IntArray(2)
+        view.getLocationOnScreen(location)
+        val yPos = location[1] + view.height // Vị trí y của view gốc
+        val screenHeight = Resources.getSystem().displayMetrics.heightPixels
+        // Kiểm tra nếu không gian phía dưới không đủ để hiển thị toàn bộ PopupWindow
+        if (yPos + popupHeight > screenHeight) {
+            // Hiển thị PopupWindow phía trên view gốc nếu không đủ không gian bên dưới
+            popupMenu.showAsDropDown(view, -200, -(popupHeight + view.height), Gravity.NO_GRAVITY)
+        } else {
+            // Hiển thị PopupWindow phía dưới view gốc nếu đủ không gian
+            popupMenu.showAsDropDown(view, -200, 30, Gravity.NO_GRAVITY)
+        }
+
+        binding1.LnAZ.safeClick {
+            personalAdapter.sortByName(true)
+            popupMenu.dismiss()
+        }
+
+        binding1.LnZA.safeClick {
+            personalAdapter.sortByName(false)
             popupMenu.dismiss()
         }
         popupMenu.showAsDropDown(view, -200, 30, Gravity.NO_GRAVITY)

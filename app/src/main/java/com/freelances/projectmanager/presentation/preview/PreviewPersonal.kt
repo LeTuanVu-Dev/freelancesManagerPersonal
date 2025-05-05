@@ -28,6 +28,9 @@ class PreviewPersonal : BaseActivity<ActivityPreviewBinding>(ActivityPreviewBind
             binding.etName.setText(it.name)
             binding.etSex.setText(it.sex)
             binding.etDate.setText(it.date)
+            binding.etHsl.setText(it.hsl)
+            binding.etChucVu.setText(it.chucVu)
+            binding.etLcb.setText(it.lcb)
         }
 
         binding.buttonBack.safeClick {
@@ -71,8 +74,11 @@ class PreviewPersonal : BaseActivity<ActivityPreviewBinding>(ActivityPreviewBind
         val name = binding.etName.text.toString().trim()
         val date = binding.etDate.text.toString().trim()
         val sex = binding.etSex.text.toString().trim()
+        val chucVu = binding.etChucVu.text.toString().trim()
+        val hsl = binding.etHsl.text.toString().trim()
+        val lcb = binding.etLcb.text.toString().trim()
         val empty =
-            name.isEmpty() || date.isEmpty() || sex.isEmpty()
+            name.isEmpty() || date.isEmpty() || sex.isEmpty() || chucVu.isEmpty() || hsl.isEmpty() || lcb.isEmpty()
         return empty
     }
 }

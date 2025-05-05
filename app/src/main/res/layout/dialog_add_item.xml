@@ -45,6 +45,22 @@
             android:hint="Ngày sinh (dd/MM/yyyy)"
             android:inputType="text" />
 
+        <!-- Title and EditText for Date -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ChucVu"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <EditText
+            android:id="@+id/etChucVu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ke toan"
+            android:inputType="text" />
+
         <!-- Title and EditText for Gender -->
         <TextView
             android:layout_width="match_parent"

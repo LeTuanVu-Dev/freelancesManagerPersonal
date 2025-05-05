@@ -14,6 +14,7 @@ import com.freelances.projectmanager.utils.ext.safeClick
 
 class PersonAdapter(
     val onClickItemFeature: (Personal) -> Unit,
+    val onChangeList: () -> Unit,
     val onClickMore: (View,Personal) -> Unit,
 ) : ListAdapter<Personal, PersonAdapter.FeatureViewHolder>(
     DIFF_CALLBACK
@@ -37,6 +38,13 @@ class PersonAdapter(
         }
     }
 
+    override fun onCurrentListChanged(
+        previousList: MutableList<Personal>,
+        currentList: MutableList<Personal>
+    ) {
+        super.onCurrentListChanged(previousList, currentList)
+        onChangeList()
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -45,6 +53,16 @@ class PersonAdapter(
             ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
+
+    fun sortByName(ascending: Boolean = true) {
+        val sortedList = if (ascending) {
+            currentList.sortedBy { it.name.lowercase() }
+        } else {
+            currentList.sortedByDescending { it.name.lowercase() }
+        }
+        submitList(sortedList)
+    }
+
 
     override fun onBindViewHolder(holder: FeatureViewHolder, position: Int) {
         holder.bind(getItem(position))
